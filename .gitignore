@@ -1,0 +1,10 @@
+build/*
+build
+.vscode
+.gitlab-ci_backup*
+doc/*
+doc
+archive
+archive/*
+.idea
+.idea/*
