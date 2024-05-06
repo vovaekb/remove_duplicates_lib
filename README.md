@@ -16,7 +16,7 @@ conan build .
 ## Run tests
 Copy test data from folder data to bin
 ```
-cp data/* bin
+cp -r data/files bin
 ```
 
 Move to folder bin and run tests:
