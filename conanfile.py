@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 import os
 
 
-class RabbitMQLibConan(ConanFile):
+class RemoveDuplicatesLibConan(ConanFile):
     name = "cpp_practicing.remove_duplicates_lib"
     version = "0.0.0"
     exports_sources = ["src/*", "CMakeLists.txt", "include/*", "test/*", "cmake/*"]
