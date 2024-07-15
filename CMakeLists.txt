@@ -9,7 +9,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CONAN_DISABLE_CHECK_COMPILER OFF)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wextra -O2 -lopencv_imgproc")
-# -Wall
 
 # OpenCV
 
@@ -39,7 +38,6 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 target_link_libraries(
         ${PROJECT_NAME} PRIVATE ${OpenCV_LIBS} ${Boost_LIBRARIES})
-# opencv_core opencv_highgui opencv_imgproc
 
 # install
 install(TARGETS ${PROJECT_NAME} DESTINATION lib) 

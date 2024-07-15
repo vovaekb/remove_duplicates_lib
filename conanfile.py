@@ -14,7 +14,6 @@ class RemoveDuplicatesLibConan(ConanFile):
     generators = "cmake", "make", "gcc"
 
     yes = ["YES", "ON", "1"]
-    # test = "ON" if os.getenv("RABBITMQLIB_TEST") in yes else "OFF"
 
     def build(self):
         cmake = CMake(self)
