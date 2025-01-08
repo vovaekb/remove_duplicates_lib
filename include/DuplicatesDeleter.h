@@ -1,9 +1,10 @@
 #include <vector>
 #include <filesystem>
+#include <string_view>
 #include <opencv2/core.hpp>
 
 
-namespace cpp_practicing {
+namespace cppPracticing {
     using string_vector = std::vector<std::string>;
 
     class DuplicatesDeleter {
@@ -12,16 +13,16 @@ namespace cpp_practicing {
 
         ~DuplicatesDeleter() = default;
 
-        void run(const std::string& files_path, const std::string& result_path);
+        void run(const std::string_view& filesPath, const std::string_view& resultPath);
     
     private:
         // bool areTheSame(const cv::Mat& first_image, const cv::Mat& second_image) const;
-        bool areTheSame(const std::string& first_file, const std::string& second_file) const;
+        bool areTheSame(const std::string_view& firstFile, const std::string_view& secondFile) const;
 
-        void readFiles(const std::string& files_path, string_vector& image_files);
+        void readFiles(const std::string_view& filesPath, string_vector& imageFiles);
 
-        void processFiles(const std::string& files_path, string_vector& image_files, string_vector& result_files);
+        void processFiles(const std::string_view& filesPath, string_vector& imageFiles, string_vector& resultFiles);
 
-        void saveResults(const std::string& files_path, const std::string& result_path, string_vector& result_files);
+        void saveResults(const std::string_view& filesPath, const std::string_view& resultPath, string_vector& resultFiles);
     };
-} // namespace cpp_practicing
+} // namespace cppPracticing
