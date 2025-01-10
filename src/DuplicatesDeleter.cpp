@@ -8,8 +8,7 @@
 
 #include "DuplicatesDeleter.h"
 
-using namespace std::filesystem;
-using namespace cv;
+namespace fs = std::filesystem;
 
 namespace cppPracticing {
     using string_vector = std::vector<std::string>;
@@ -44,13 +43,14 @@ namespace cppPracticing {
 
     DuplicatesDeleter::DuplicatesDeleter() {}
 
-    void DuplicatesDeleter::run(const std::string_view& filesPath, const std::string_view& resultPath) {
+    void DuplicatesDeleter::run(const std::string_view& filesPath, 
+        const std::string_view& resultPath) {
         string_vector imageFiles;
         string_vector resultFiles;
 
         generateImages();
 
-        path dirPath = filesPath;
+        fs::path dirPath = filesPath;
 
         if (!exists(dirPath) || !is_directory(dirPath))
         {
@@ -64,24 +64,25 @@ namespace cppPracticing {
         saveResults(filesPath, resultPath, resultFiles);
     }
 
-    bool DuplicatesDeleter::areTheSame(const std::string_view& firstFile, const std::string_view& secondFile) const {
+    bool DuplicatesDeleter::areTheSame(const std::string_view& firstFile, 
+        const std::string_view& secondFile) const {
         cv::Mat firstImage = imread(static_cast<std::string>(firstFile), IMREAD_COLOR);
         cv::Mat secondImage = imread(static_cast<std::string>(secondFile), IMREAD_COLOR);
 
-        cvtColor(firstImage, firstImage, COLOR_BGR2GRAY);
-        cvtColor(secondImage, secondImage, COLOR_BGR2GRAY);
+        cvtColor(firstImage, firstImage, cv::COLOR_BGR2GRAY);
+        cvtColor(secondImage, secondImage, cv::COLOR_BGR2GRAY);
 
         cv::Mat diff;
-        compare(firstImage, secondImage, diff, CMP_EQ);
-        const auto totalPixels = firstImage.rows * firstImage.cols;
-        auto different_pixels = totalPixels - countNonZero(diff);
+        cv::compare(firstImage, secondImage, diff, cv::CMP_EQ);
+        const uint32_t totalPixels = firstImage.rows * firstImage.cols;
+        uint32_t different_pixels = totalPixels - countNonZero(diff);
         if (different_pixels == 0) return true;
 
         return false;
     }
 
     void DuplicatesDeleter::readFiles(const std::string_view& filesPath, string_vector& imageFiles) {
-        path dirPath = filesPath;
+        fs::path dirPath = filesPath;
 
         for (const auto& file : directory_iterator(dirPath))
         {
@@ -106,29 +107,29 @@ namespace cppPracticing {
 
         for (size_t i = 1; i < imageFiles.size(); ++i)
         {
-            path firstImageFilePath = imageFiles[i - 1];
-            path secondImageFilePath = imageFiles[i];
+            fs::path firstImageFilePath = imageFiles[i - 1];
+            fs::path secondImageFilePath = imageFiles[i];
 
-            auto areTheSameImages = areTheSame(firstImageFilePath.c_str(), secondImageFilePath.c_str());
+            bool areTheSameImages = areTheSame(firstImageFilePath.c_str(), secondImageFilePath.c_str());
             if (!areTheSameImages) resultFiles.emplace_back(secondImageFilePath);
         }
         
     }
 
-    void DuplicatesDeleter::saveResults(const std::string_view& filesPath, const std::string_view& resultPath, string_vector& resultFiles) {
-
-        if (!exists(resultPath)) {
-            create_directory(resultPath);
+    void DuplicatesDeleter::saveResults(const std::string_view& filesPath, 
+        const std::string_view& resultPath, string_vector& resultFiles) {
+        if (!fs::exists(resultPath)) {
+            fs::create_directory(resultPath);
         }
 
         for (const auto& filePath : resultFiles)
         {
-            path sourceImageFilePath = filePath;
+            fs::path sourceImageFilePath = filePath;
             std::string fileName = sourceImageFilePath.filename();
 
-            path targetImageFilePath = resultPath;
+            fs::path targetImageFilePath = resultPath;
             targetImageFilePath /= fileName;
-            copy(sourceImageFilePath.c_str(), targetImageFilePath.c_str());
+            fs::copy(sourceImageFilePath.c_str(), targetImageFilePath.c_str());
         }
     }
 
