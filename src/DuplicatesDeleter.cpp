@@ -64,7 +64,7 @@ namespace cppPracticing {
         saveResults(filesPath, resultPath, resultFiles);
     }
 
-    bool DuplicatesDeleter::areTheSame(const std::string_view& firstFile, 
+    bool DuplicatesDeleter::areFilesTheSame(const std::string_view& firstFile, 
         const std::string_view& secondFile) const {
         cv::Mat firstImage = imread(static_cast<std::string>(firstFile), IMREAD_COLOR);
         cv::Mat secondImage = imread(static_cast<std::string>(secondFile), IMREAD_COLOR);
@@ -110,8 +110,8 @@ namespace cppPracticing {
             fs::path firstImageFilePath = imageFiles[i - 1];
             fs::path secondImageFilePath = imageFiles[i];
 
-            bool areTheSameImages = areTheSame(firstImageFilePath.c_str(), secondImageFilePath.c_str());
-            if (!areTheSameImages) resultFiles.emplace_back(secondImageFilePath);
+            bool areFilesTheSameImages = areFilesTheSame(firstImageFilePath.c_str(), secondImageFilePath.c_str());
+            if (!areFilesTheSameImages) resultFiles.emplace_back(secondImageFilePath);
         }
         
     }

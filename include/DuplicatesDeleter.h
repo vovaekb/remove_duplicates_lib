@@ -16,8 +16,8 @@ namespace cppPracticing {
         void run(const std::string_view& filesPath, const std::string_view& resultPath);
     
     private:
-        // bool areTheSame(const cv::Mat& first_image, const cv::Mat& second_image) const;
-        bool areTheSame(const std::string_view& firstFile, const std::string_view& secondFile) const;
+        // bool areFilesTheSame(const cv::Mat& first_image, const cv::Mat& second_image) const;
+        bool areFilesTheSame(const std::string_view& firstFile, const std::string_view& secondFile) const;
 
         void readFiles(const std::string_view& filesPath, string_vector& imageFiles);
 
